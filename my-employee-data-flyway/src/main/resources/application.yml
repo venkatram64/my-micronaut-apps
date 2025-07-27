@@ -8,8 +8,6 @@ micronaut:
       - com.venkat.config
       - com.venkat.tasks
 
-
-
 # Datasource configuration
 datasources:
   default:
@@ -43,6 +41,8 @@ flyway:
   datasources:
     default:
       enabled: true
+      locations: classpath:db/migration
+      schemas: emp_flyway_db
 
 # ShedLock configuration
 shedlock:
@@ -50,12 +50,17 @@ shedlock:
   defaults:
     lock-at-most-for: PT1M
   micronaut:
-    auto-configure: false # Disable shedlock-micronaut auto-configuration
+    auto-configure: true # Enable auto-configuration for shedlock-micronaut
+    table-name: shedlock # Explicitly set the table name
+    datasource-name: default # Use the default datasource
 
+# Logging configuration
 logging:
   level:
     net.javacrumbs.shedlock: TRACE
-#    com.zaxxer.hikari: TRACE
-#    org.flywaydb: TRACE
-#    org.hibernate.SQL: TRACE
-#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    com.venkat: TRACE # Log your custom package for LockProvider debugging
+    # Uncomment below for additional debugging if needed
+    # com.zaxxer.hikari: TRACE
+    # org.flywaydb: TRACE
+    # org.hibernate.SQL: TRACE
+    # org.hibernate.type.descriptor.sql.BasicBinder: TRACE

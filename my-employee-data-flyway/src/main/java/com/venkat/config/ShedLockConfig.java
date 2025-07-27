@@ -6,7 +6,7 @@ import io.micronaut.context.annotation.Requires;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.core.LockProvider;
-import net.javacrumbs.shedlock.provider.jdbc.JdbcLockProvider;
+import net.javacrumbs.shedlock.provider.jdbc.micronaut.MicronautJdbcLockProvider;
 import org.flywaydb.core.Flyway;
 
 
@@ -24,11 +24,11 @@ public class ShedLockConfig {
 //        return new MicronautJdbcLockProvider(transactionOperation);
 //    }
 
-//    @Singleton
-//    public LockProvider lockProvider(DataSource dataSource) {
-//        // Create the provider with table name explicitly
-//        return new MicronautJdbcLockProvider(dataSource,"shedlock");
-//    }
+    @Singleton
+    public LockProvider lockProvider(DataSource dataSource) {
+        // Create the provider with table name explicitly
+        return new MicronautJdbcLockProvider(dataSource);
+    }
 
 //    @Singleton
 //    public LockProvider lockProvider(DataSource dataSource) {
@@ -44,11 +44,11 @@ public class ShedLockConfig {
 //        }
 //    }
 
-    @Singleton
-    @Primary
-    public LockProvider lockProvider(DataSource dataSource) {
-        log.info("Creating MicronautJdbcLockProvider with table name 'shedlock'");
-        return new JdbcLockProvider(dataSource, "shedlock");
-    }
+//    @Singleton
+//    @Primary
+//    public LockProvider lockProvider(DataSource dataSource) {
+//        log.info("Creating MicronautJdbcLockProvider with table name 'shedlock'");
+//        return new JdbcLockProvider(dataSource, "shedlock");
+//    }
 
 }
