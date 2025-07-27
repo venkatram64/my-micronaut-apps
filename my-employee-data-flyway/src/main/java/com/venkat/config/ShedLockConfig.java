@@ -1,18 +1,18 @@
 package com.venkat.config;
 
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.annotation.Requires;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.core.LockProvider;
-import net.javacrumbs.shedlock.provider.jdbc.micronaut.MicronautJdbcLockProvider;
-
+import net.javacrumbs.shedlock.provider.jdbc.JdbcLockProvider;
+import org.flywaydb.core.Flyway;
 
 
 import javax.sql.DataSource;
 
 @Factory
-//@Singleton
 @Slf4j
 @Requires(beans = DataSource.class)  // Only create if DataSource exists
 public class ShedLockConfig {
@@ -45,9 +45,10 @@ public class ShedLockConfig {
 //    }
 
     @Singleton
+    @Primary
     public LockProvider lockProvider(DataSource dataSource) {
-        return new MicronautJdbcLockProvider(dataSource);
+        log.info("Creating MicronautJdbcLockProvider with table name 'shedlock'");
+        return new JdbcLockProvider(dataSource, "shedlock");
     }
-
 
 }

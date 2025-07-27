@@ -7,6 +7,14 @@
             <pattern>%cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n</pattern>
         </encoder>
     </appender>
+    <logger name="com.venkat.config" level="INFO"/>
+    <logger name="com.venkat.tasks" level="INFO"/>
+    <logger name="net.javacrumbs.shedlock" level="TRACE"/>
+<!--    <logger name="io.micronaut.context" level="DEBUG"/>-->
+<!--    <logger name="com.zaxxer.hikari" level="DEBUG"/>-->
+<!--    <logger name="org.flywaydb" level="DEBUG"/>-->
+<!--    <logger name="org.hibernate.SQL" level="DEBUG"/>-->
+<!--    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>-->
 
     <root level="info">
         <appender-ref ref="STDOUT" />
