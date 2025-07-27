@@ -1,0 +1,57 @@
+micronaut:
+  server:
+    port: ${SERVER_PORT:8081}
+  application:
+    name: my-employee-data-flyway
+  jdbc:
+    enabled: true  # Required for Spring JDBC integration
+
+datasources:
+  default:
+    url: jdbc:mysql://localhost:3306/emp_flyway_db?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    schema-generate: NONE
+#    dialect: MYSQL
+
+    connection-timeout: 30000
+    maximum-pool-size: 10
+    minimum-idle: 5
+#    idle-timeout: 600000
+#    max-lifetime: 1800000
+#    leak-detection-threshold: 5000
+#    connection-test-query: SELECT 1
+#    pool-name: MyAppHikariPool
+#    schema-generate: NONE
+#    dialect: MYSQL
+
+jpa:
+  default:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: validate
+        show_sql: true
+        format_sql: true
+
+flyway:
+  enabled: true
+  locations: classpath:db/migration
+  baseline-on-migrate: true
+  validate-on-migrate: false
+
+shedlock:
+  enabled: true
+  defaults:
+    lock-at-most-for: PT1M
+    lock-at-least-for: PT5S
+  provider:
+    jdbc:
+      table-name: shedlock
+      use-db-time: true
+logging:
+  level:
+    net.javacrumbs.shedlock: TRACE  # More detailed than DEBUG
+    org.springframework.jdbc.core.JdbcTemplate: DEBUG
+    com.zaxxer.hikari: DEBUG
